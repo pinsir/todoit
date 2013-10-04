@@ -16,20 +16,20 @@
 
 @implementation TBScheduleViewController
 
-- (id)init
-{
-    self = [super init];
-    if (self) {
-        [self setDataSource:self];
-        [self setDelegate:self];
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
+	
+    // 1. Instantiate a CKCalendarView
+    CKCalendarView *calendar = [CKCalendarView new];
+    
+    // 2. Optionally, set up the datasource and delegates
+    [calendar setDelegate:self];
+    [calendar setDataSource:self];
+    
+    // 3. Present the calendar
+    [[self view] addSubview:calendar];
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,8 +48,7 @@
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"Asia/Shanghai"]];
     
     NSString *dStr = [dateFormatter stringFromDate:date];
-    
-    //    NSLog(@"时区：%@ 当地时间：%@",[[dateFormatter timeZone] name], dStr);
+
     NSMutableArray *muArray = [[NSMutableArray alloc]initWithCapacity:1];
     NSArray *array = [[NSArray alloc]init];
     if ([dStr isEqualToString:[dateFormatter stringFromDate:[NSDate date]]]) {

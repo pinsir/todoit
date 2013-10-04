@@ -35,7 +35,7 @@
 
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    [self setTitle:@"日程"];
+    [self setTitle:@"日程总览"];
 
     /* Prepare the events array */
     
@@ -53,9 +53,16 @@
     [[self calendarView] setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar] animated:NO];
     [[self calendarView] setDisplayMode:CKCalendarViewModeWeek animated:NO];
     [self calendarView].backgroundColor = [UIColor clearColor];
+    
+    UIBarButtonItem *btn = [[UIBarButtonItem alloc] initWithTitle:@"back" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonTapped:)];
+    self.navigationItem.leftBarButtonItem = btn;
 
 }
 
+- (void)backButtonTapped: (id)sender
+{
+    [self.navigationController popViewControllerAnimated: YES];
+}
 
 - (void)didReceiveMemoryWarning
 {

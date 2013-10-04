@@ -39,6 +39,8 @@
 		3A61E36B17FE7B2600D18D49 /* MBPolygonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A61E34E17FE7B2600D18D49 /* MBPolygonView.m */; };
 		3A61E36C17FE7B2600D18D49 /* CKCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A61E35817FE7B2600D18D49 /* CKCalendarViewController.m */; };
 		3A61E36D17FE7B2600D18D49 /* CKCalendarViewControllerInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A61E35A17FE7B2600D18D49 /* CKCalendarViewControllerInternal.m */; };
+		3A61E37117FEA8A400D18D49 /* TBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A61E36F17FEA8A400D18D49 /* TBMainViewController.m */; };
+		3A61E37417FEB62A00D18D49 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A61E37317FEB62A00D18D49 /* MainStoryboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +118,9 @@
 		3A61E35817FE7B2600D18D49 /* CKCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKCalendarViewController.m; sourceTree = "<group>"; };
 		3A61E35917FE7B2600D18D49 /* CKCalendarViewControllerInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKCalendarViewControllerInternal.h; sourceTree = "<group>"; };
 		3A61E35A17FE7B2600D18D49 /* CKCalendarViewControllerInternal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKCalendarViewControllerInternal.m; sourceTree = "<group>"; };
+		3A61E36E17FEA8A400D18D49 /* TBMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBMainViewController.h; sourceTree = "<group>"; };
+		3A61E36F17FEA8A400D18D49 /* TBMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBMainViewController.m; sourceTree = "<group>"; };
+		3A61E37317FEB62A00D18D49 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,6 +187,9 @@
 				3A61E2A517FE6E1F00D18D49 /* Supporting Files */,
 				3A61E31D17FE721F00D18D49 /* TBScheduleViewController.h */,
 				3A61E31E17FE721F00D18D49 /* TBScheduleViewController.m */,
+				3A61E36E17FEA8A400D18D49 /* TBMainViewController.h */,
+				3A61E36F17FEA8A400D18D49 /* TBMainViewController.m */,
+				3A61E37317FEB62A00D18D49 /* MainStoryboard.storyboard */,
 			);
 			path = ToDoIt;
 			sourceTree = "<group>";
@@ -416,6 +424,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A61E37417FEB62A00D18D49 /* MainStoryboard.storyboard in Resources */,
 				3A61E2A917FE6E1F00D18D49 /* InfoPlist.strings in Resources */,
 				3A61E2B117FE6E1F00D18D49 /* Images.xcassets in Resources */,
 			);
@@ -449,6 +458,7 @@
 				3A61E36617FE7B2600D18D49 /* UIView+Border.m in Sources */,
 				3A61E36917FE7B2600D18D49 /* CKCalendarHeaderView.m in Sources */,
 				3A61E36317FE7B2600D18D49 /* NSString+Color.m in Sources */,
+				3A61E37117FEA8A400D18D49 /* TBMainViewController.m in Sources */,
 				3A61E31F17FE721F00D18D49 /* TBScheduleViewController.m in Sources */,
 				3A61E36A17FE7B2600D18D49 /* CKCalendarView.m in Sources */,
 				3A61E35F17FE7B2600D18D49 /* NSCalendar+Ranges.m in Sources */,
@@ -658,6 +668,7 @@
 				3A61E2C917FE6E1F00D18D49 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3A61E2CA17FE6E1F00D18D49 /* Build configuration list for PBXNativeTarget "ToDoItTests" */ = {
 			isa = XCConfigurationList;
@@ -666,6 +677,7 @@
 				3A61E2CC17FE6E1F00D18D49 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

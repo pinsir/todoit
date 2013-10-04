@@ -8,12 +8,7 @@
 
 #import "TBAppDelegate.h"
 #import "TBScheduleViewController.h"
-
-@interface TBAppDelegate ()
-
-@property (nonatomic, strong) UINavigationController *navigationController;
-
-@end
+#import "TBMainViewController.h"
 
 @implementation TBAppDelegate
 
@@ -22,10 +17,28 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    self.window.rootViewController = [storyboard instantiateInitialViewController];
+    
+//
+//    
+//    self.navController = [[UINavigationController alloc] initWithRootViewController:self.window.rootViewController];
+//    
+//    [self.navController setNavigationBarHidden:YES];
+//    
+//    [self.window addSubview:self.navController.view];
+    
     [self.window makeKeyAndVisible];
     
-    self.viewController = [[TBScheduleViewController alloc]init];
-    self.window.rootViewController = self.viewController;
+    
+    
+
+    
+//    self.window.rootViewController = [[TBMainViewController alloc]init];
+    
+//    self.viewController = [[TBScheduleViewController alloc]init];
+//    self.window.rootViewController = self.viewController;
     
     return YES;
 }

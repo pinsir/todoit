@@ -9,6 +9,6 @@
 #import "CalendarKit.h"
 #import "CKCalendarViewController.h"
 
-@interface TBScheduleViewController : CKCalendarViewController
+@interface TBScheduleViewController : UIViewController
 
 @end
