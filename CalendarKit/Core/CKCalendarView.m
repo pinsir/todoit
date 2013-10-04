@@ -44,8 +44,6 @@
 @property (nonatomic, assign) BOOL isAnimating;
 @property (nonatomic, strong) UIView *bottomBorder;
 
-@property (nonatomic, assign) BOOL canSwitchMove;
-
 @end
 
 @implementation CKCalendarView
@@ -89,8 +87,75 @@
         _minimumDate = nil;
         _maximumDate = nil;
         
+        // add SwipeGesture
+        UISwipeGestureRecognizer *recognizerLeft;
+        recognizerLeft = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+        [recognizerLeft setDirection:(UISwipeGestureRecognizerDirectionLeft)];
+        
+        UISwipeGestureRecognizer *recognizerRight;
+        recognizerRight = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+        [recognizerRight setDirection:(UISwipeGestureRecognizerDirectionRight)];
+        
+        UISwipeGestureRecognizer *recognizerUp;
+        recognizerUp = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+        [recognizerUp setDirection:(UISwipeGestureRecognizerDirectionUp)];
+        
+        UISwipeGestureRecognizer *recognizerDown;
+        recognizerDown = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipeFrom:)];
+        [recognizerDown setDirection:(UISwipeGestureRecognizerDirectionDown)];
+        
+        [self addGestureRecognizer:recognizerLeft];
+        [self addGestureRecognizer:recognizerRight];
+        [self addGestureRecognizer:recognizerUp];
+        [self addGestureRecognizer:recognizerDown];
+        
     }
     return self;
+}
+
+//  SwipeGesture for calendar view
+-(void)handleSwipeFrom:(UISwipeGestureRecognizer *)recognizer{
+    
+    if(recognizer.direction==UISwipeGestureRecognizerDirectionDown) {
+        if (_displayMode == CKCalendarViewModeWeek)
+        {
+            [UIView transitionWithView:self duration:0.8 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                
+                [self setDisplayMode:CKCalendarViewModeMonth];
+                
+            } completion:^(BOOL finished){}];
+        }
+    }
+    if(recognizer.direction==UISwipeGestureRecognizerDirectionUp) {
+        if (_displayMode == CKCalendarViewModeMonth)
+        {
+            [UIView transitionWithView:self duration:0.8 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                
+                [self setDisplayMode:CKCalendarViewModeWeek];
+                
+            } completion:^(BOOL finished){}];
+        }
+    }
+    if(recognizer.direction==UISwipeGestureRecognizerDirectionLeft) {
+        if (_displayMode == CKCalendarViewModeWeek)
+        {
+            [UIView transitionWithView:self duration:0.8 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                
+                [self forwardTapped];
+                
+            } completion:^(BOOL finished){}];
+        }
+    }
+    if(recognizer.direction==UISwipeGestureRecognizerDirectionRight) {
+        if (_displayMode == CKCalendarViewModeWeek)
+        {
+            [UIView transitionWithView:self duration:0.8 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                
+                [self backwardTapped];
+                
+            } completion:^(BOOL finished){}];
+        }
+    }
 }
 
 - (id)initWithMode:(CKCalendarDisplayMode)CalendarDisplayMode
@@ -1284,46 +1349,6 @@
     
     [self pointInside:p withEvent:event];
     
-    CGPoint preP = [t previousLocationInView:self];
-    
-    /** Down to month view and up to week view */
-    
-    if ([self canSwitchMove] && p.y-preP.y>10 && _displayMode == CKCalendarViewModeWeek && !CGRectContainsPoint([self _rectForCellsForDisplayMode:_displayMode], p))
-    {
-        [UIView transitionWithView:self duration:0.8 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            
-            [self setDisplayMode:CKCalendarViewModeMonth];
-
-        } completion:^(BOOL finished){}];
-    }
-    if ([self canSwitchMove] && preP.y-p.y>10 && _displayMode == CKCalendarViewModeMonth && CGRectContainsPoint([self _rectForCellsForDisplayMode:_displayMode], p))
-    {
-        [UIView transitionWithView:self duration:0.8 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            
-            [self setDisplayMode:CKCalendarViewModeWeek];
-
-        } completion:^(BOOL finished){}];
-    }
-
-    /** Left and right towards calendar view, just for week mode */
-    
-    if ([self canSwitchMove] && _displayMode == CKCalendarViewModeWeek && preP.x-p.x>10)
-    {
-        [UIView transitionWithView:self duration:0.8 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            
-            [self forwardTapped];
-            
-        } completion:^(BOOL finished){}];
-    }
-    if ([self canSwitchMove] && _displayMode == CKCalendarViewModeWeek && p.x-preP.x>10)
-    {
-        [UIView transitionWithView:self duration:0.8 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
-            
-            [self backwardTapped];
-            
-        } completion:^(BOOL finished){}];
-    }
-    
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
@@ -1374,8 +1399,6 @@
             }
             
         }
-        
-        [self setCanSwitchMove:true];
     }
     
     return [super pointInside:point withEvent:event];
@@ -1390,9 +1413,6 @@
     BOOL animated = ![[self calendar] date:[self date] isSameMonthAs:dateToSelect];
     
     [self setDate:dateToSelect animated:animated];
-    
-    [self setCanSwitchMove:false];
-
 }
 
 // If a touch was cancelled, reset the index

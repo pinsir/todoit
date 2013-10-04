@@ -35,7 +35,7 @@
 
     [self setEdgesForExtendedLayout:UIRectEdgeNone];
     
-    [self setTitle:@"任务总览"];
+    [self setTitle:@"日程"];
 
     /* Prepare the events array */
     
