@@ -9,9 +9,15 @@
 #import "TBScheduleViewController.h"
 #import "NSCalendarCategories.h"
 #import "NSDate+Components.h"
+#import "NSString+Color.h"
 
 @interface TBScheduleViewController ()<CKCalendarViewDelegate, CKCalendarViewDataSource>
     @property (nonatomic, strong) NSMutableDictionary *data;
+    @property (nonatomic, strong) UIButton *doneButton;
+    @property (nonatomic, strong) UIButton *deleteButton;
+    @property (nonatomic, strong) UIButton *cancelButton;
+    @property (nonatomic, strong) UIView *operationView;
+    @property (nonatomic, strong) UITableViewCell *operationCell;
 @end
 
 @implementation TBScheduleViewController
@@ -30,12 +36,46 @@
     // 3. Present the calendar
     [[self view] addSubview:calendar];
     
+    // 4. Init operate view for table cell
+    [self initOperateButtonAndView];
+    
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)initOperateButtonAndView
+{
+    _doneButton = [UIButton new];
+    [[self doneButton] setTitle:@"完成" forState:UIControlStateNormal];
+    [[self doneButton] setBackgroundColor:[UIColor colorWithRed:0.3 green:0.8 blue:0.3 alpha:0.9]];
+    
+    _deleteButton = [UIButton new];
+    [[self deleteButton] setTitle:@"删除" forState:UIControlStateNormal];
+    [[self deleteButton] setBackgroundColor:[UIColor colorWithRed:0.8 green:0.3 blue:0.3 alpha:0.9]];
+    
+    _cancelButton = [UIButton new];
+    [[self cancelButton] setTitle:@"取消" forState:UIControlStateNormal];
+    [[self cancelButton] setBackgroundColor:[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:0.9]];
+    [[self cancelButton] addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
+    
+    _operationView = [UIView new];
+    
+    [[self operationView] addSubview:[self doneButton]];
+    [[self operationView] addSubview:[self deleteButton]];
+    [[self operationView] addSubview:[self cancelButton]];
+}
+
+- (void)cancelClick
+{
+    [UIView transitionWithView:self.operationCell duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+     {
+         [[self operationView] removeFromSuperview];
+         
+     } completion:^(BOOL finished){}];
 }
 
 #pragma mark - CKCalendarViewDataSource
@@ -76,9 +116,42 @@
 }
 
 //  A row is selected in the events table. (Use to push a detail view or whatever.)
-- (void)calendarView:(CKCalendarView *)CalendarView didSelectEvent:(CKCalendarEvent *)event
+- (void)calendarView:(CKCalendarView *)CalendarView didSelectEvent:(CKCalendarEvent *)event withCell:(UITableViewCell *)cell
 {
-    NSLog(@"do 3");
+    // Set operationCell
+    _operationCell = cell;
+    
+    // init operate cell panel
+    [self setOperationCellPanel:cell];
+    
+    // show operate cell with animation
+    [UIView transitionWithView:cell duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+     {
+         [cell addSubview:[self operationView]];
+         
+     } completion:^(BOOL finished){}];
 }
+
+- (void) setOperationCellPanel:(UITableViewCell *)cell
+{
+    CGRect operationFrame = cell.frame;
+    operationFrame.origin.x = 0;
+    operationFrame.origin.y = 0;
+    [self operationView].frame = operationFrame;
+    
+    int vInsets = 15;
+    int hInsets = 10;
+    int operationWidth = cell.frame.size.width-2*hInsets;
+    int buttonWidth = operationWidth/3;
+    CGRect doneFrame = CGRectMake(hInsets, vInsets/2, buttonWidth, cell.frame.size.height-vInsets);
+    [self doneButton].frame = doneFrame;
+    
+    CGRect deleteFrame = CGRectMake(doneFrame.origin.x+buttonWidth, vInsets/2, buttonWidth, cell.frame.size.height-vInsets);
+    [self deleteButton].frame = deleteFrame;
+    
+    CGRect cancelFrame = CGRectMake(deleteFrame.origin.x+buttonWidth, vInsets/2, buttonWidth, cell.frame.size.height-vInsets);
+    [self cancelButton].frame = cancelFrame;
+}
+
 
 @end

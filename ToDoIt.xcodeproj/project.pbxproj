@@ -41,6 +41,7 @@
 		3A61E36D17FE7B2600D18D49 /* CKCalendarViewControllerInternal.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A61E35A17FE7B2600D18D49 /* CKCalendarViewControllerInternal.m */; };
 		3A61E37117FEA8A400D18D49 /* TBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A61E36F17FEA8A400D18D49 /* TBMainViewController.m */; };
 		3A61E37417FEB62A00D18D49 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A61E37317FEB62A00D18D49 /* MainStoryboard.storyboard */; };
+		3A9C712917FFC77D0018740A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9C712817FFC77D0018740A /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -121,6 +122,7 @@
 		3A61E36E17FEA8A400D18D49 /* TBMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBMainViewController.h; sourceTree = "<group>"; };
 		3A61E36F17FEA8A400D18D49 /* TBMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBMainViewController.m; sourceTree = "<group>"; };
 		3A61E37317FEB62A00D18D49 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
+		3A9C712817FFC77D0018740A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A9C712917FFC77D0018740A /* QuartzCore.framework in Frameworks */,
 				3A61E2A117FE6E1F00D18D49 /* CoreGraphics.framework in Frameworks */,
 				3A61E2A317FE6E1F00D18D49 /* UIKit.framework in Frameworks */,
 				3A61E29F17FE6E1F00D18D49 /* Foundation.framework in Frameworks */,
@@ -170,6 +173,7 @@
 		3A61E29D17FE6E1F00D18D49 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3A9C712817FFC77D0018740A /* QuartzCore.framework */,
 				3A61E29E17FE6E1F00D18D49 /* Foundation.framework */,
 				3A61E2A017FE6E1F00D18D49 /* CoreGraphics.framework */,
 				3A61E2A217FE6E1F00D18D49 /* UIKit.framework */,

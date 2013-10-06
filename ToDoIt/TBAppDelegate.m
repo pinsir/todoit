@@ -21,24 +21,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     self.window.rootViewController = [storyboard instantiateInitialViewController];
     
-//
-//    
-//    self.navController = [[UINavigationController alloc] initWithRootViewController:self.window.rootViewController];
-//    
-//    [self.navController setNavigationBarHidden:YES];
-//    
-//    [self.window addSubview:self.navController.view];
-    
     [self.window makeKeyAndVisible];
-    
-    
-    
-
-    
-//    self.window.rootViewController = [[TBMainViewController alloc]init];
-    
-//    self.viewController = [[TBScheduleViewController alloc]init];
-//    self.window.rootViewController = self.viewController;
     
     return YES;
 }

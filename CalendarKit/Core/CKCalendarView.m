@@ -67,13 +67,13 @@
         _headerView = [CKCalendarHeaderView new];
 
         //  Accessory Table
-        _table = [UITableView new];
+        _table = [[UITableView alloc]init];
         _table.backgroundColor = [UIColor clearColor];
         [_table setDelegate:self];
         [_table setDataSource:self];
         
-        [_table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
-        [_table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"noDataCell"];
+//        [_table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+//        [_table registerClass:[UITableViewCell class] forCellReuseIdentifier:@"noDataCell"];
         
         //  Events for selected date
         _events = [NSMutableArray new];
@@ -157,6 +157,8 @@
         }
     }
 }
+
+
 
 - (id)initWithMode:(CKCalendarDisplayMode)CalendarDisplayMode
 {
@@ -348,6 +350,7 @@
             tableFrame.size.height = [[self table] contentSize].height;
         }
         [[self table] setFrame:tableFrame animated:animated];
+        [[self table] setSeparatorInset:UIEdgeInsetsZero];
         [[self table] setSeparatorColor:[UIColor colorWithWhite:0.8 alpha:0.6]];
         
         [self table].contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
@@ -1068,7 +1071,6 @@
     return count;
 }
 
-//设置rowHeight
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 60;
@@ -1088,85 +1090,71 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
 
     [cell setBackgroundColor:[UIColor whiteColor]];
+    [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     int cellHeight = [self tableView:tableView heightForRowAtIndexPath:indexPath];
     
     /** just show demo */
     UIColor *showColor = [[UIColor alloc]init];
+    NSString *leftDayTitle = @"";
     if (indexPath.row == 0) {
         showColor = [@"#EB426B" toColor];
+        leftDayTitle = @"当天截止";
     }
     else if (indexPath.row == 1)
     {
         showColor = [@"#F7C91E" toColor];
+        leftDayTitle = @"还剩3天";
     }
     else
     {
-        showColor = [@"#62C82B" toColor];
+        showColor = [@"#63C92D" toColor];
+        leftDayTitle = @"还剩5天";
     }
-    
-    // 设置任务标识
-    int noteViewFontSize = 11;
-    int noteViewPadding = 4;
-    int noteViewX = cell.frame.origin.x+5;
-    int noteViewY = (cellHeight-noteViewFontSize)/2-noteViewPadding;
-    int noteViewWidth = cell.frame.size.width/8;
-    int noteViewHeight = cellHeight-2*noteViewY;
-    UIView *noteView = [[UILabel alloc] initWithFrame:CGRectMake(noteViewX, noteViewY, noteViewWidth,noteViewHeight)];
-    
-    UIView *dot = [UIView new];
-    CGFloat dotRadius = 15;
-    CGFloat selfHeight = noteViewHeight;
-    CGFloat selfWidth = noteViewWidth;
-    [[dot layer] setCornerRadius:dotRadius/2];
-    CGRect dotFrame = CGRectMake(selfWidth/2 - dotRadius/2, selfHeight/2 - dotRadius/2, dotRadius, dotRadius);
-    [dot setFrame:dotFrame];
-    [dot setBackgroundColor:showColor];
-    [noteView addSubview:dot];
     
     // 设置主题label
     int titleLabelFontSize = 15;
-    int titleLabelPadding = 3;
-    int titleLabelX = noteViewX+noteViewWidth;
+    int titleLabelPadding = 10;
+    int titleLabelX = cell.frame.origin.x+15;
     int titleLabelY = (cellHeight-titleLabelFontSize)/2-titleLabelPadding;
-    int titleLabelWidth = 3*tableView.frame.size.width/5;
-    int titleLabelHeight = cellHeight-2*titleLabelY;
+    int titleLabelWidth = 3*tableView.frame.size.width/4;
+    int titleLabelHeight = cellHeight-2*titleLabelY-titleLabelPadding;
     UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(titleLabelX, titleLabelY, titleLabelWidth,titleLabelHeight)];
     [titleLabel setFont:[UIFont systemFontOfSize:titleLabelFontSize]];
     [titleLabel setTextAlignment:NSTextAlignmentLeft];
     [titleLabel setTextColor:[UIColor blackColor]];
     [titleLabel setText:[event title]];
     
+    // 设置截止日期label
+    int endDateLabelFontSize = 10;
+    int endDateLabelX = titleLabelX+1;
+    int endDateLabelY = titleLabelY+titleLabelFontSize+2;
+    int endDateLabelWidth = tableView.frame.size.width/2;
+    int endDateLabelHeight = cellHeight-2*titleLabelY;
+    UILabel *endDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(endDateLabelX, endDateLabelY, endDateLabelWidth,endDateLabelHeight)];
+    [endDateLabel setFont:[UIFont systemFontOfSize:endDateLabelFontSize]];
+    [endDateLabel setTextAlignment:NSTextAlignmentLeft];
+    [endDateLabel setTextColor:[UIColor colorWithWhite:0.2 alpha:0.5]];
+    [endDateLabel setText:@"截止日期：2013-10-15"];
+    
     // 设置时间label
     int dateLabelFontSize = 13;
     int dateLabelPadding = 3;
     int dateLabelX = titleLabelX+titleLabelWidth;
     int dateLabelY = (cellHeight-dateLabelFontSize)/2-dateLabelPadding;
-    int dateLabelWidth = tableView.frame.size.width/5;
+    int dateLabelWidth = tableView.frame.size.width/4;
     int dateLabelHeight = cellHeight-2*dateLabelY;
     UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(dateLabelX, dateLabelY, dateLabelWidth,dateLabelHeight)];
     [dateLabel setFont:[UIFont boldSystemFontOfSize:dateLabelFontSize]];
     [dateLabel setTextAlignment:NSTextAlignmentLeft];
     [dateLabel setTextColor:showColor];
-    [dateLabel setText:[self dateToLabelString:[event date]]];
+    [dateLabel setText:leftDayTitle];
     
-    [cell addSubview:noteView];
     [cell addSubview:titleLabel];
+    [cell addSubview:endDateLabel];
     [cell addSubview:dateLabel];
 
     return cell;
-}
-
-- (NSString *)dateToLabelString:(NSDate *)date
-{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setAMSymbol:@"上午"];
-    [dateFormatter setPMSymbol:@"下午"];
-    [dateFormatter setDateFormat:@"h:mm aaa"];
-    [dateFormatter setTimeZone:[NSTimeZone localTimeZone]];
-    
-    NSString *dStr = [dateFormatter stringFromDate:date];
-    return dStr;
 }
 
 - (NSString *)dateToTitleString:(NSDate *)date
@@ -1186,8 +1174,9 @@
         return;
     }
     
-    if ([[self delegate] respondsToSelector:@selector(calendarView:didSelectEvent:)]) {
-        [[self delegate] calendarView:self didSelectEvent:[self events][[indexPath row]]];
+    if ([[self delegate] respondsToSelector:@selector(calendarView:didSelectEvent:withCell:)]) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        [[self delegate] calendarView:self didSelectEvent:[self events][[indexPath row]] withCell:cell];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];

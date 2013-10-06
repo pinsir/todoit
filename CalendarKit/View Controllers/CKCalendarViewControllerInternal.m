@@ -129,14 +129,14 @@
 }
 
 //  A row is selected in the events table. (Use to push a detail view or whatever.)
-- (void)calendarView:(CKCalendarView *)calendarView didSelectEvent:(CKCalendarEvent *)event
+- (void)calendarView:(CKCalendarView *)calendarView didSelectEvent:(CKCalendarEvent *)event withCell:(UITableViewCell *)cell
 {
     if ([self isEqual:[self delegate]]) {
         return;
     }
     
-    if ([[self delegate] respondsToSelector:@selector(calendarView:didSelectEvent:)]) {
-        [[self delegate] calendarView:calendarView didSelectEvent:event];
+    if ([[self delegate] respondsToSelector:@selector(calendarView:didSelectEvent:withCell:)]) {
+        [[self delegate] calendarView:calendarView didSelectEvent:event withCell:cell];
     }
 }
 
