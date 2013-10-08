@@ -10,6 +10,7 @@
 #import "NSCalendarCategories.h"
 #import "NSDate+Components.h"
 #import "NSString+Color.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface TBScheduleViewController ()<CKCalendarViewDelegate, CKCalendarViewDataSource>
     @property (nonatomic, strong) NSMutableDictionary *data;
@@ -49,18 +50,33 @@
 
 - (void)initOperateButtonAndView
 {
-    _doneButton = [UIButton new];
-    [[self doneButton] setTitle:@"完成" forState:UIControlStateNormal];
-    [[self doneButton] setBackgroundColor:[UIColor colorWithRed:0.3 green:0.8 blue:0.3 alpha:0.9]];
+    int buttonFontSize = 13;
+    int buttonCornerRadius = 8;
     
-    _deleteButton = [UIButton new];
-    [[self deleteButton] setTitle:@"删除" forState:UIControlStateNormal];
-    [[self deleteButton] setBackgroundColor:[UIColor colorWithRed:0.8 green:0.3 blue:0.3 alpha:0.9]];
+    _doneButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _doneButton.layer.cornerRadius = buttonCornerRadius;
+    _doneButton.clipsToBounds = YES;
+    _doneButton.titleLabel.font = [UIFont boldSystemFontOfSize: buttonFontSize];
+    [_doneButton setBackgroundColor:[@"#A7C067" toColor]];
+    [_doneButton setTitle:@"完成" forState:UIControlStateNormal];
+    [_doneButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     
-    _cancelButton = [UIButton new];
-    [[self cancelButton] setTitle:@"取消" forState:UIControlStateNormal];
-    [[self cancelButton] setBackgroundColor:[UIColor colorWithRed:0.6 green:0.6 blue:0.6 alpha:0.9]];
-    [[self cancelButton] addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
+    _deleteButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _deleteButton.layer.cornerRadius = buttonCornerRadius;
+    _deleteButton.clipsToBounds = YES;
+    _deleteButton.titleLabel.font = [UIFont boldSystemFontOfSize: buttonFontSize];
+    [_deleteButton setBackgroundColor:[@"#D96C64" toColor]];
+    [_deleteButton setTitle:@"删除" forState:UIControlStateNormal];
+    [_deleteButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    _cancelButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _cancelButton.layer.cornerRadius = buttonCornerRadius;
+    _cancelButton.clipsToBounds = YES;
+    _cancelButton.titleLabel.font = [UIFont boldSystemFontOfSize: buttonFontSize];
+    [_cancelButton setBackgroundColor:[@"#7D7D7B" toColor]];
+    [_cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+    [_cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [_cancelButton addTarget:self action:@selector(cancelClick) forControlEvents:UIControlEventTouchUpInside];
     
     _operationView = [UIView new];
     
@@ -71,7 +87,7 @@
 
 - (void)cancelClick
 {
-    [UIView transitionWithView:self.operationCell duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+    [UIView transitionWithView:self.operationCell duration:0.5 options:UIViewAnimationOptionTransitionFlipFromTop animations:^
      {
          [[self operationView] removeFromSuperview];
          
@@ -125,7 +141,7 @@
     [self setOperationCellPanel:cell];
     
     // show operate cell with animation
-    [UIView transitionWithView:cell duration:0.5 options:UIViewAnimationOptionTransitionCrossDissolve animations:^
+    [UIView transitionWithView:cell duration:0.5 options:UIViewAnimationOptionTransitionFlipFromBottom animations:^
      {
          [cell addSubview:[self operationView]];
          
@@ -136,20 +152,24 @@
 {
     CGRect operationFrame = cell.frame;
     operationFrame.origin.x = 0;
-    operationFrame.origin.y = 0;
+    operationFrame.origin.y = -1;
     [self operationView].frame = operationFrame;
+    [[self operationView] setBackgroundColor:[UIColor whiteColor]];
     
-    int vInsets = 15;
-    int hInsets = 10;
-    int operationWidth = cell.frame.size.width-2*hInsets;
-    int buttonWidth = operationWidth/3;
-    CGRect doneFrame = CGRectMake(hInsets, vInsets/2, buttonWidth, cell.frame.size.height-vInsets);
+    int buttonWidth = 50;
+    int buttonHeight = 30;
+    int vInsets = (cell.frame.size.height-buttonHeight)/2;
+    int hInsets = 50;
+    // Insets between two buttons
+    int buttonInsets = 30;
+    
+    CGRect doneFrame = CGRectMake(hInsets, vInsets, buttonWidth, buttonHeight);
     [self doneButton].frame = doneFrame;
     
-    CGRect deleteFrame = CGRectMake(doneFrame.origin.x+buttonWidth, vInsets/2, buttonWidth, cell.frame.size.height-vInsets);
+    CGRect deleteFrame = CGRectMake(doneFrame.origin.x+buttonWidth+buttonInsets, vInsets, buttonWidth, buttonHeight);
     [self deleteButton].frame = deleteFrame;
     
-    CGRect cancelFrame = CGRectMake(deleteFrame.origin.x+buttonWidth, vInsets/2, buttonWidth, cell.frame.size.height-vInsets);
+    CGRect cancelFrame = CGRectMake(deleteFrame.origin.x+buttonWidth+buttonInsets, vInsets, buttonWidth, buttonHeight);
     [self cancelButton].frame = cancelFrame;
 }
 
