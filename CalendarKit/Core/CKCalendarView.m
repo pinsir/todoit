@@ -339,7 +339,7 @@
     
     [[self bottomBorder] removeFromSuperview];
     [[self table] removeFromSuperview];
-    if ([[self table] contentSize].height > 30)
+    if ([[self table] contentSize].height > [self tableView:[self table] heightForRowAtIndexPath:0])
     {
         CGRect tableFrame = [[self superview] bounds];
         tableFrame.origin.y = [self frame].origin.y+[self frame].size.height;
@@ -351,9 +351,8 @@
         }
         [[self table] setFrame:tableFrame animated:animated];
         [[self table] setSeparatorInset:UIEdgeInsetsZero];
-        [[self table] setSeparatorColor:[UIColor colorWithWhite:0.8 alpha:0.6]];
-        
-        [self table].contentInset = UIEdgeInsetsMake(0, 0, 0, 0);
+        [[self table] setSeparatorColor:[@"#F6F6F6" toColor]];
+        [[self table] setContentInset:UIEdgeInsetsMake(0, 0, 0, 0)];
         [[self table] setBackgroundColor:[UIColor whiteColor]];
         
         /** Add bottom border */
@@ -368,40 +367,6 @@
         [[self superview] insertSubview:[self table] belowSubview:self];
     }
     
-}
-
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    // no content here
-    if (tableView.contentSize.height == 30) {
-        return nil;
-    }
-	// create the parent view that will hold header Label
-	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, tableView.frame.size.width, 0.0)];
-	customView.backgroundColor = [@"#F8F6F8" toColor];
-	// create the button object
-	UILabel * headerLabel = [[UILabel alloc] init];
-	headerLabel.textColor = [UIColor blackColor];
-	headerLabel.font = [UIFont boldSystemFontOfSize:13];
-	headerLabel.frame = CGRectMake(20.0, 5.0, tableView.frame.size.width, 20.0);
-	headerLabel.text = [self dateToTitleString:[self date]];
-	[customView addSubview:headerLabel];
-    
-	return customView;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 30;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    CGFloat sectionHeaderHeight = 0;
-    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
-        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
-    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
-        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
-    }
 }
 
 - (void)_layoutCells
@@ -1155,6 +1120,41 @@
     [cell addSubview:dateLabel];
 
     return cell;
+}
+
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    // no content here
+    if (tableView.contentSize.height == [self tableView:tableView heightForRowAtIndexPath:0]) {
+        return nil;
+    }
+	// create the parent view that will hold header Label
+	UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 0)];
+	customView.backgroundColor = [@"#F8F6F8" toColor];
+	// create the button object
+	UILabel * headerLabel = [[UILabel alloc] init];
+	headerLabel.textColor = [UIColor blackColor];
+	headerLabel.font = [UIFont boldSystemFontOfSize:13];
+	headerLabel.frame = CGRectMake(15, 5, tableView.frame.size.width, 20);
+	headerLabel.text = [self dateToTitleString:[self date]];
+	[customView addSubview:headerLabel];
+    
+	return customView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 30;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat sectionHeaderHeight = 0;
+    if (scrollView.contentOffset.y<=sectionHeaderHeight&&scrollView.contentOffset.y>=0) {
+        scrollView.contentInset = UIEdgeInsetsMake(-scrollView.contentOffset.y, 0, 0, 0);
+    } else if (scrollView.contentOffset.y>=sectionHeaderHeight) {
+        scrollView.contentInset = UIEdgeInsetsMake(-sectionHeaderHeight, 0, 0, 0);
+    }
 }
 
 - (NSString *)dateToTitleString:(NSDate *)date

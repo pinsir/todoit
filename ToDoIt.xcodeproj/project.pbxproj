@@ -42,6 +42,9 @@
 		3A61E37117FEA8A400D18D49 /* TBMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A61E36F17FEA8A400D18D49 /* TBMainViewController.m */; };
 		3A61E37417FEB62A00D18D49 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3A61E37317FEB62A00D18D49 /* MainStoryboard.storyboard */; };
 		3A9C712917FFC77D0018740A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A9C712817FFC77D0018740A /* QuartzCore.framework */; };
+		3ABE49F91803B265000BE382 /* TBTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABE49F81803B265000BE382 /* TBTodayViewController.m */; };
+		3ABE49FC1803C91E000BE382 /* TBTaskTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABE49FB1803C91E000BE382 /* TBTaskTableView.m */; };
+		3ABE4A001803D828000BE382 /* TBTaskTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABE49FF1803D828000BE382 /* TBTaskTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +126,14 @@
 		3A61E36F17FEA8A400D18D49 /* TBMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBMainViewController.m; sourceTree = "<group>"; };
 		3A61E37317FEB62A00D18D49 /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		3A9C712817FFC77D0018740A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		3ABE49F71803B265000BE382 /* TBTodayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBTodayViewController.h; sourceTree = "<group>"; };
+		3ABE49F81803B265000BE382 /* TBTodayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBTodayViewController.m; sourceTree = "<group>"; };
+		3ABE49FA1803C91E000BE382 /* TBTaskTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBTaskTableView.h; sourceTree = "<group>"; };
+		3ABE49FB1803C91E000BE382 /* TBTaskTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBTaskTableView.m; sourceTree = "<group>"; };
+		3ABE49FD1803CB0C000BE382 /* TBTaskTableDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBTaskTableDelegate.h; sourceTree = "<group>"; };
+		3ABE49FE1803D828000BE382 /* TBTaskTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBTaskTableViewController.h; sourceTree = "<group>"; };
+		3ABE49FF1803D828000BE382 /* TBTaskTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBTaskTableViewController.m; sourceTree = "<group>"; };
+		3ABE4A011803DCEC000BE382 /* TBTaskTableDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TBTaskTableDataSource.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +205,14 @@
 				3A61E36E17FEA8A400D18D49 /* TBMainViewController.h */,
 				3A61E36F17FEA8A400D18D49 /* TBMainViewController.m */,
 				3A61E37317FEB62A00D18D49 /* MainStoryboard.storyboard */,
+				3ABE49F71803B265000BE382 /* TBTodayViewController.h */,
+				3ABE49F81803B265000BE382 /* TBTodayViewController.m */,
+				3ABE49FA1803C91E000BE382 /* TBTaskTableView.h */,
+				3ABE49FB1803C91E000BE382 /* TBTaskTableView.m */,
+				3ABE49FD1803CB0C000BE382 /* TBTaskTableDelegate.h */,
+				3ABE49FE1803D828000BE382 /* TBTaskTableViewController.h */,
+				3ABE49FF1803D828000BE382 /* TBTaskTableViewController.m */,
+				3ABE4A011803DCEC000BE382 /* TBTaskTableDataSource.h */,
 			);
 			path = ToDoIt;
 			sourceTree = "<group>";
@@ -451,14 +470,17 @@
 			files = (
 				3A61E2AF17FE6E1F00D18D49 /* TBAppDelegate.m in Sources */,
 				3A61E35D17FE7B2600D18D49 /* NSCalendar+DateManipulation.m in Sources */,
+				3ABE4A001803D828000BE382 /* TBTaskTableViewController.m in Sources */,
 				3A61E36017FE7B2600D18D49 /* NSDate+Components.m in Sources */,
 				3A61E36D17FE7B2600D18D49 /* CKCalendarViewControllerInternal.m in Sources */,
 				3A61E36717FE7B2600D18D49 /* CKCalendarCell.m in Sources */,
 				3A61E36517FE7B2600D18D49 /* UIView+AnimatedFrame.m in Sources */,
 				3A61E36C17FE7B2600D18D49 /* CKCalendarViewController.m in Sources */,
 				3A61E36117FE7B2600D18D49 /* NSDate+Description.m in Sources */,
+				3ABE49F91803B265000BE382 /* TBTodayViewController.m in Sources */,
 				3A61E36817FE7B2600D18D49 /* CKCalendarEvent.m in Sources */,
 				3A61E35E17FE7B2600D18D49 /* NSCalendar+Juncture.m in Sources */,
+				3ABE49FC1803C91E000BE382 /* TBTaskTableView.m in Sources */,
 				3A61E36617FE7B2600D18D49 /* UIView+Border.m in Sources */,
 				3A61E36917FE7B2600D18D49 /* CKCalendarHeaderView.m in Sources */,
 				3A61E36317FE7B2600D18D49 /* NSString+Color.m in Sources */,
